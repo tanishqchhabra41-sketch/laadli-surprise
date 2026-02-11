@@ -17,15 +17,13 @@
 
 body{
   background:linear-gradient(135deg,#ffd6e8,#fff5fa);
-  overflow-x:hidden;
   text-align:center;
-  color:#444;
+  overflow-x:hidden;
 }
 
-/* floating hearts */
+/* hearts */
 .heart{
   position:fixed;
-  color:#ff4d6d;
   animation:float 6s linear infinite;
 }
 @keyframes float{
@@ -44,84 +42,44 @@ section{
 
 h1{
   font-family:'Pacifico';
-  font-size:42px;
   color:#ff4d6d;
+  font-size:40px;
   margin-bottom:15px;
 }
 
 button{
-  padding:12px 25px;
+  padding:14px 30px;
   border:none;
   border-radius:25px;
   background:#ff4d6d;
   color:white;
+  margin:10px;
+  font-size:16px;
   cursor:pointer;
-  margin-top:12px;
-  font-size:15px;
-  transition:.3s;
-}
-
-button:hover{
-  transform:scale(1.1);
-}
-
-/* cute music button */
-.music-btn{
-  background:#ff85a2;
-  box-shadow:0 0 15px #ff4d6d;
-  animation:pulse 1.5s infinite;
-}
-
-@keyframes pulse{
-  0%{transform:scale(1)}
-  50%{transform:scale(1.1)}
-  100%{transform:scale(1)}
 }
 
 .photo{
-  width:280px;
-  height:280px;
+  width:260px;
+  height:260px;
   border-radius:20px;
   object-fit:cover;
-  box-shadow:0 10px 25px rgba(0,0,0,.2);
   margin:20px 0;
 }
 
 .card{
   background:white;
-  padding:15px;
-  margin:10px;
-  border-radius:15px;
-  width:300px;
-  box-shadow:0 5px 15px rgba(0,0,0,.1);
-}
-
-input{
-  width:100%;
-  padding:8px;
-  margin-top:6px;
-  border-radius:10px;
-  border:1px solid #ddd;
+  padding:12px;
+  border-radius:12px;
+  margin:8px;
+  width:280px;
 }
 
 .letter{
   background:white;
-  padding:30px;
+  padding:25px;
   border-radius:20px;
-  max-width:500px;
+  max-width:450px;
   display:none;
-  animation:fade 2s forwards;
-}
-
-@keyframes fade{
-  from{opacity:0;transform:scale(.7)}
-  to{opacity:1;transform:scale(1)}
-}
-
-.poem{
-  margin-top:20px;
-  color:#ff4d6d;
-  font-style:italic;
 }
 
 #noBtn{
@@ -132,9 +90,92 @@ input{
 
 <body>
 
-<!-- Floating hearts -->
+<!-- floating hearts -->
 <script>
-for(let i=0;i<35;i++){
+for(let i=0;i<30;i++){
   let h=document.createElement("div");
   h.className="heart";
-  h.inn
+  h.innerHTML="❤️";
+  h.style.left=Math.random()*100+"vw";
+  h.style.fontSize="20px";
+  document.body.appendChild(h);
+}
+</script>
+
+<!-- music -->
+<audio id="bgMusic" loop>
+  <source src="song.mp3" type="audio/mp3">
+</audio>
+
+<!-- 1 Welcome -->
+<section id="s0">
+<h1>Hi Laadli ❤️</h1>
+<p>I made something special only for you…</p>
+
+<button onclick="playMusic()">🎵 Play Our Song 🎵</button>
+<button onclick="next(1)">Open Surprise 💌</button>
+</section>
+
+<!-- 2 Photo -->
+<section id="s1" style="display:none;">
+<h1>Our Memory 🌙</h1>
+<img src="photo.jpg" class="photo">
+<p id="timer"></p>
+<button onclick="next(2)">Next 💕</button>
+</section>
+
+<!-- 3 Quiz -->
+<section id="s2" style="display:none;">
+<h1>Answer for me 💖</h1>
+<div class="card">Where did we first meet?<input></div>
+<div class="card">Favorite memory?<input></div>
+<button onclick="next(3)">Next ❤️</button>
+</section>
+
+<!-- 4 Proposal -->
+<section id="s3" style="display:none; position:relative;">
+<h1>Will you stay with me forever? 🥺❤️</h1>
+<button onclick="next(4)">YES 💍</button>
+<button id="noBtn">NO 😜</button>
+</section>
+
+<!-- 5 Letter -->
+<section id="s4">
+<div class="letter" id="letter">
+<h1>My Sweet Laadli ❤️</h1>
+<p>
+You are my happiness, my peace, my everything.<br>
+Thank you for being mine forever.
+</p>
+</div>
+</section>
+
+<script>
+function playMusic(){
+  document.getElementById("bgMusic").play();
+}
+
+function next(n){
+  document.querySelectorAll("section").forEach(s=>s.style.display="none");
+  document.getElementById("s"+n).style.display="flex";
+  if(n===4) document.getElementById("letter").style.display="block";
+}
+
+/* days counter */
+let meet=new Date("2024-01-01");
+setInterval(()=>{
+  let now=new Date();
+  let days=Math.floor((now-meet)/86400000);
+  document.getElementById("timer").innerText="Together for "+days+" days ❤️";
+},1000);
+
+/* run away button */
+const noBtn=document.getElementById("noBtn");
+noBtn.onmouseover=()=>{
+  noBtn.style.top=Math.random()*80+"vh";
+  noBtn.style.left=Math.random()*80+"vw";
+}
+</script>
+
+</body>
+</html>
